@@ -6,7 +6,7 @@ export default function Card({name,id,rating,price,image}){
         <article key={id}>
             <img alt={name} src={image}/>
         <h4>{name}</h4>
-        <p>Valoracion{rating}</p>
+        <p>Valoracion: {"★".repeat(rating).padEnd(5,"☆")}</p>
         <p>price {price.toLocaleString("es-AR",{style:"currency",currency:"ARS"})}</p>
         </article>
         </>

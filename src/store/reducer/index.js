@@ -1,6 +1,8 @@
-import { GETAPI } from "../actions/actions"
+
+import { GETAPI ,FILTERCOLOR} from "../actions/actions"
 const initialState ={
-    Products:[]
+    Products:[],
+    ProductsForFilter:[]
 };
 
 const rootReducer = (state = initialState, action)=>{
@@ -10,8 +12,25 @@ const rootReducer = (state = initialState, action)=>{
         case GETAPI:
             return{
                 ...state,
-                Products: action.payload
+                Products: action.payload,
+                ProductsForFilter:action.payload
             };
+        case FILTERCOLOR:
+            let filtersAplly = action.payload
+            let allProducts = state.Products;
+            
+            if(filtersAplly.size){
+
+                for (const iterator of filtersAplly) {
+                    allProducts = allProducts.filter((e)=>e.color  === iterator)   
+                }
+                
+            }
+            
+            return{
+                ...state,
+            }
+
         default:{
             return state
         };

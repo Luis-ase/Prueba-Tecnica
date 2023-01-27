@@ -2,15 +2,22 @@ import React,{useEffect} from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { getProducts } from "../../store/actions/actions";
 import Card from "../Card/Card";
-export default function Cards ({name,id}){
+import FilterCategory from "../Filter/FilterCategory.jsx/FilterCategory";
+import FilterColor from "../Filter/FilterColor/FilterColor";
+export default function Cards (){
+
     const dispatch = useDispatch()
     const products = useSelector((state) => state.Products)
-    console.log(products)
+   
+
+
     useEffect(()=>{
         dispatch(getProducts())
     },[dispatch])
     return(
         <>
+        <h2>Resultados : {products.length}</h2>
+
         {products?.map((e)=>{
             return (<div>
             <Card
@@ -21,10 +28,7 @@ export default function Cards ({name,id}){
             price={e.price}
             />
             </div>)
-            
-            
         })
-
         }
         </>
     )
