@@ -1,8 +1,15 @@
 
-import { GETAPI ,FILTERCOLOR} from "../actions/actions"
+import { GETAPI ,FILTERCOLOR, FILTERATING} from "../actions/actions"
+
 const initialState ={
     Products:[],
-    ProductsForFilter:[]
+    ProductsForFilter:[],
+    productsYafiltrados:{
+        color:[],
+        price:[],
+        rating:[],
+        category:[],
+    },
 };
 
 const rootReducer = (state = initialState, action)=>{
@@ -17,19 +24,25 @@ const rootReducer = (state = initialState, action)=>{
             };
         case FILTERCOLOR:
             let filtersAplly = action.payload
-            let allProducts = state.Products;
-            
-            if(filtersAplly.size){
-
-                for (const iterator of filtersAplly) {
-                    allProducts = allProducts.filter((e)=>e.color  === iterator)   
-                }
+            let allProducts = state.ProductsForFilter;
                 
+                allProducts = allProducts.filter((e)=>e.color  === filtersAplly)   
+                console.log(allProducts)       
+            return{
+                ...state,
+                Products: allProducts? allProducts: state.ProductsForFilter,
+                productsYafiltrados:[...productsFiltrados, productsFiltrados.color=filtersAplly]
             }
+
+        case FILTERATING:
+            let rating = action.payload
+            let productsFiltrados = state.ProductsForFilter?.filter((e)=> e.rating === action.payload)
             
             return{
                 ...state,
-            }
+                Products:productsFiltrados? productsFiltrados :state.ProductsForFilter,
+                productsYafiltrados:[...productsFiltrados, productsFiltrados.color=rating]
+            }  
 
         default:{
             return state
