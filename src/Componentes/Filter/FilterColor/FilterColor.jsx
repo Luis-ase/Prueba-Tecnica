@@ -3,6 +3,9 @@ import { useMemo } from "react";
 import { orderColor } from "../../../store/actions/actions";
 import { useDispatch,useSelector} from "react-redux";
 
+import Form from 'react-bootstrap/Form';
+
+
 export default function FilterColor({Products}){
     const [select ,setSelect] = useState(()=>new Set())
 
@@ -38,7 +41,6 @@ export default function FilterColor({Products}){
     // }
 
     const handleChangeSelect = (e)=>{
-        e.preventDefault()
         dispatch(orderColor(e.target.value))
     }
     
@@ -62,15 +64,16 @@ export default function FilterColor({Products}){
            })}
         </ul> */}
 
-        <select onChange={e => handleChangeSelect(e)}>
+        <Form.Select aria-label="Default select example" onChange={e => handleChangeSelect(e)} title="Colors">
             {colors?.map((colorname)=>{
+                <option >Colors</option>
                 return(
                     <>
-                    <option  key={colorname} value={colorname}>{colorname}</option>
+                    <option key={colorname} value={colorname}>{colorname}</option>
                     </>
                 )
             })}
-        </select>
+        </Form.Select>
         </>
-    )
+    );
 }

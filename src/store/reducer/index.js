@@ -5,6 +5,7 @@ const initialState ={
     Products:[],
     ProductsForFilter:[],
     productsYafiltrados:{
+        Products:[],
         color:[],
         price:[],
         rating:[],
@@ -23,25 +24,41 @@ const rootReducer = (state = initialState, action)=>{
                 ProductsForFilter:action.payload
             };
         case FILTERCOLOR:
-            let filtersAplly = action.payload
-            let allProducts = state.ProductsForFilter;
-                
-                allProducts = allProducts.filter((e)=>e.color  === filtersAplly)   
-                console.log(allProducts)       
+            state.productsYafiltrados.color.push(action.payload);
+            let copiaTheColors = state.productsYafiltrados.color;
+            let filtrado= state.ProductsForFilter
+            let resutl= []
+            for (let l = 0; l < copiaTheColors.length; l++) {
+             let resultFilter=  filtrado.filter((e)=> e.color === copiaTheColors[l])
+               resutl.push({resultFilter}) 
+               
+            } 
+            const nuevoObjeto = resutl.reduce((acc, curr) => {
+                acc.resultFilter = acc.resultFilter.concat(curr.resultFilter);
+                return acc;
+              }, { resultFilter: [] });
+              
+              const nuevoArray = [nuevoObjeto];
+              
+              let pasarObjeto = nuevoArray[0].resultFilter
+
+              console.log(pasarObjeto)
+             let ahroaSI= state.productsYafiltrados.Products= pasarObjeto;
+             
+
             return{
                 ...state,
-                Products: allProducts? allProducts: state.ProductsForFilter,
-                productsYafiltrados:[...productsFiltrados, productsFiltrados.color=filtersAplly]
+                Products: ahroaSI,
             }
 
         case FILTERATING:
-            let rating = action.payload
+            
             let productsFiltrados = state.ProductsForFilter?.filter((e)=> e.rating === action.payload)
             
             return{
                 ...state,
-                Products:productsFiltrados? productsFiltrados :state.ProductsForFilter,
-                productsYafiltrados:[...productsFiltrados, productsFiltrados.color=rating]
+                Products:productsFiltrados,
+                
             }  
 
         default:{
